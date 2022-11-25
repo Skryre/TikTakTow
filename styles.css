@@ -6,4 +6,30 @@ body {
     display: flex;
     width: 100vw;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    background-color: white;
+    width: 540px;
+    height: 540px;
+}
+
+.key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    border: solid black 1px;
+    color: rgba(9, 14, 17);
+}
+
+.key:hover{
+    background-color: rgb(205, 205, 205);
 }
