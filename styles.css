@@ -28,8 +28,24 @@ body {
     background-color: whitesmoke;
     border: solid black 1px;
     color: rgba(9, 14, 17);
+    font-size: 4em;
+}
+
+.x .key:hover::after{
+    content: 'x';
+}
+
+.o .key:hover::after{
+    content: 'o';
 }
 
 .key:hover{
     background-color: rgb(205, 205, 205);
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
