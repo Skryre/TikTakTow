@@ -2,6 +2,7 @@ const contain = document.querySelectorAll(".key");
 const title = document.querySelector("h3");
 const reset = document.querySelector("button")
 const boardGrid = document.querySelector(".board")
+const displayUpdate = document.querySelector(".winning-message")
 
 const settings = (() => {
 
@@ -9,18 +10,18 @@ const settings = (() => {
     let currentPlayer = 'X';
     let round = 0;
 
-    const winConditions = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-      ];
 
-    function checkWin (currentPlayer) {
+    const checkWin = (currentPlayer) => {
+        const winConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+          ];
         return winConditions.some(combination => {
             return combination.every(index => {
             return board[index] === currentPlayer
@@ -35,6 +36,7 @@ const gameController = (() => {
 
     contain.forEach((element) =>
     element.addEventListener("click", (e) => {
+        console.log(settings.checkWin(settings.currentPlayer))
         if (e.target.textContent !== "") return;
             settings.board[e.target.dataset.index] = settings.currentPlayer;
             element.innerHTML = settings.currentPlayer
@@ -43,10 +45,11 @@ const gameController = (() => {
             return title.innerHTML = "Draw!!"
         }
         else if(settings.checkWin(settings.currentPlayer)){
-            return display.text("WINNNNNNNN!!")
+            display.text("WINNNNNNNN!!")
+            displayUpdate.classList.add('show');
         }
         else{
-            changeState () 
+            changeState ()
         }
     }));
 
@@ -77,6 +80,8 @@ const display = (() =>{
         settings.currentPlayer = 'X';
         settings.round = 0;
         text("Player X's turn")
+        displayUpdate.classList.remove('show');
+
     }
     return{text}
 })()

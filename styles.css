@@ -31,11 +31,11 @@ body {
     font-size: 4em;
 }
 
-.x .key:hover::after{
+.x .key:not(.x):not(.circle)::hover::after{
     content: 'x';
 }
 
-.o .key:hover::after{
+.o .key:not(.x):not(.circle)::hover::after{
     content: 'o';
 }
 
@@ -49,3 +49,22 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.winning-message{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+.winning-message.show {
+    display: flex;
+  }
