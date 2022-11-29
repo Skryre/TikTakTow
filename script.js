@@ -6,10 +6,25 @@ const displayUpdate = document.querySelector(".winning-message")
 
 const settings = (() => {
 
-    board = Array(9).fill('');
+    let board = Array(9).fill('');
     let currentPlayer = 'X';
-    let round = 0;
 
+    function reset () {
+        board = Array(9).fill('');
+        currentPlayer = 'X';
+    }
+
+    function getcurrent (){
+        return currentPlayer
+    }
+
+    function changeState () {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X'
+    }
+
+    function addSign (index){
+        board[index] = currentPlayer
+    }
 
     const checkWin = (currentPlayer) => {
         const winConditions = [
@@ -27,44 +42,20 @@ const settings = (() => {
             return board[index] === currentPlayer
             })
         })}
+    function call () {
+        console.log(board, currentPlayer)
+    }
 
-    return {board, currentPlayer, round, checkWin};
+    return {reset, checkWin, changeState, addSign, getcurrent, call};
 
 })();
 
 const gameController = (() => {
 
-    contain.forEach((element) =>
-    element.addEventListener("click", (e) => {
-        console.log(settings.checkWin(settings.currentPlayer))
-        if (e.target.textContent !== "") return;
-            settings.board[e.target.dataset.index] = settings.currentPlayer;
-            element.innerHTML = settings.currentPlayer
-            settings.round++
-        if(settings.round === 9){
-            return title.innerHTML = "Draw!!"
-        }
-        else if(settings.checkWin(settings.currentPlayer)){
-            display.text("WINNNNNNNN!!")
-            displayUpdate.classList.add('show');
-        }
-        else{
-            changeState ()
-        }
-    }));
+    let round = 0
 
-    function changeState () {
-        settings.currentPlayer = settings.currentPlayer === 'X' ? 'O' : 'X'
-    }
-
-})();
-
-const display = (() =>{
-    const title = document.querySelector("h3");
-    const reset = document.querySelector("button")
-
-    function text (text){
-        title.innerHTML=text
+    function roundincrement (){
+        round++
     }
 
     reset.addEventListener(`click`, () => {
@@ -75,13 +66,27 @@ const display = (() =>{
         contain.forEach( function(element){
             element.innerHTML = '';
         });
-        boardGrid.classList.remove('x')
-        settings.board = Array(9).fill('');
-        settings.currentPlayer = 'X';
-        settings.round = 0;
-        text("Player X's turn")
-        displayUpdate.classList.remove('show');
-
+        settings.reset()
+        round = 0
     }
-    return{text}
-})()
+
+    contain.forEach((element) =>
+    element.addEventListener("click", (e) => {
+        if (e.target.textContent !== "") return;
+            settings.addSign(e.target.dataset.index);
+            element.innerHTML = settings.getcurrent()
+            roundincrement ()
+            settings.call ()
+        if(round === 9){
+            return title.innerHTML = "Draw!!"
+        }
+        else if(settings.checkWin(settings.getcurrent())){
+            title.innerHTML="win!!!!!!!"
+        }
+        else{
+            settings.changeState()
+            title.innerHTML=settings.getcurrent()
+        }
+    }));
+
+})();
