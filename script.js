@@ -43,7 +43,7 @@ const gameController = (() => {
             return title.innerHTML = "Draw!!"
         }
         else if(settings.checkWin(settings.currentPlayer)){
-            return title.innerHTML = "WINNNNNNNN!!"
+            return display.text("WINNNNNNNN!!")
         }
         else{
             changeState () 
@@ -57,6 +57,13 @@ const gameController = (() => {
 })();
 
 const display = (() =>{
+    const title = document.querySelector("h3");
+    const reset = document.querySelector("button")
+
+    function text (text){
+        title.innerHTML=text
+    }
+
     reset.addEventListener(`click`, () => {
         resetButton()
     });
@@ -69,6 +76,7 @@ const display = (() =>{
         settings.board = Array(9).fill('');
         settings.currentPlayer = 'X';
         settings.round = 0;
-        title.innerHTML = "Player X's turn";
+        text("Player X's turn")
     }
+    return{text}
 })()
